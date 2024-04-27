@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "OLX - Free Classified in India",
   description: "OLX - Free Classified in India, Buy and sell for free in India",
-  icons: { icon: "/favicon" }
+  icons: { icon: "/favicon.png" }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

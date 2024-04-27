@@ -4,11 +4,12 @@ import clsx from "clsx"
 interface ButtonProps {
     label: string
     className?: string
+    onClick?: ()=> void
 }
 
-const Button: React.FC<ButtonProps> = ({label, className}) => {
+const Button: React.FC<ButtonProps> = ({label, className, onClick}) => {
   return (
-    <button className={clsx("outline outline-1 outline-gray-300 border-2 border-transparent hover:border-black font-semibold", className)}>
+    <button onClick={onClick} className={clsx("outline outline-1 outline-gray-300 border-2 border-transparent hover:border-black font-semibold", className)}>
       {label}
     </button>
   )
