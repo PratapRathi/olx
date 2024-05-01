@@ -3,6 +3,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import { useCallback, useState } from "react";
 import MenuItem from "./MenuItem";
+import useLoginModel from "@/app/hooks/useLoginModel";
 
 
 const UserMenu = () => {
@@ -11,7 +12,9 @@ const UserMenu = () => {
         setIsOpen(!isOpen);
     },[isOpen])
 
-    let currentUser = true;
+    const loginModal = useLoginModel();
+
+    let currentUser = false;
     return (
         <div className="relative cursor-pointer" onClick={handleOpen}>
             <div className="flex flex-row items-center justify-center bg-white rounded-full gap-3 shadow-lg
@@ -27,8 +30,7 @@ const UserMenu = () => {
                     <div className="flex flex-col cursor-pointer">
                         {!currentUser ? (
                             <>
-                                <MenuItem label="Login" />
-                                <MenuItem label="Signup" />
+                                <MenuItem onClick={loginModal.onOpen} label="Login" />
                             </>
                         ) : (
                             <>
