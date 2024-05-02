@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/components/navbar/Navbar";
+import ToasterProvider from "@/app/providers/ToasterProvider";
 import LoginModal from "@/app/components/modals/LoginModal";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,12 +14,14 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.png" }
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const currentUser = await getCurrentUser();
   return (
     <html lang="en">
       <body className={inter.className}>
-        <LoginModal/>
-        <Navbar />
+        <ToasterProvider/>
+        <LoginModal />
+        <Navbar currentUser={currentUser} />
         {children}
       </body>
     </html>

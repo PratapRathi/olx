@@ -4,17 +4,32 @@ import Avatar from "../Avatar";
 import { useCallback, useState } from "react";
 import MenuItem from "./MenuItem";
 import useLoginModel from "@/app/hooks/useLoginModel";
+import { User } from "@prisma/client";
+import toast from "react-hot-toast";
+import { signOut } from "next-auth/react";
 
 
-const UserMenu = () => {
+interface UserMenuProps {
+    currentUser: User | null
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const handleOpen = useCallback(()=>{
+    const handleOpen = useCallback(() => {
         setIsOpen(!isOpen);
-    },[isOpen])
+    }, [isOpen])
 
     const loginModal = useLoginModel();
 
-    let currentUser = false;
+    const logout = useCallback(() => {
+        const toastId = toast.loading("Loading...");
+        signOut().then(() => {
+            toast.success("Logged out successfully", { id: toastId });
+        }).catch(() => {
+            toast.error("Something went wrong", { id: toastId })
+        })
+    }, [])
+
     return (
         <div className="relative cursor-pointer" onClick={handleOpen}>
             <div className="flex flex-row items-center justify-center bg-white rounded-full gap-3 shadow-lg
@@ -22,7 +37,7 @@ const UserMenu = () => {
             ">
                 <AiOutlineMenu />
                 <div className="hidden md:block">
-                    <Avatar />
+                    <Avatar src={currentUser?.image} />
                 </div>
             </div>
             {isOpen && (
@@ -39,7 +54,7 @@ const UserMenu = () => {
                                 <MenuItem label="My Post" />
                                 <MenuItem label="My Conversation" />
                                 <hr />
-                                <MenuItem label="Logout" /></>
+                                <MenuItem onClick={logout} label="Logout" /></>
                         )}
                     </div>
                 </div>
