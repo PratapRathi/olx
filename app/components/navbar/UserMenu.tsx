@@ -3,10 +3,11 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import { useCallback, useState } from "react";
 import MenuItem from "./MenuItem";
-import useLoginModel from "@/app/hooks/useLoginModel";
+import useLoginModel from "@/app/hooks/useLoginModal";
 import { User } from "@prisma/client";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
+import useSellModal from "@/app/hooks/useSellModal";
 
 
 interface UserMenuProps {
@@ -14,6 +15,7 @@ interface UserMenuProps {
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+    const sellModal = useSellModal();
     const [isOpen, setIsOpen] = useState(false);
     const handleOpen = useCallback(() => {
         setIsOpen(!isOpen);
@@ -49,7 +51,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                             </>
                         ) : (
                             <>
-                                <MenuItem label="Sell Now" />
+                                <MenuItem onClick={sellModal.onOpen} label="Sell Now" />
                                 <MenuItem label="Favorites" />
                                 <MenuItem label="My Post" />
                                 <MenuItem label="My Conversation" />

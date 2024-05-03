@@ -2,7 +2,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { IoMdClose } from 'react-icons/io'
-import useLoginModel from '@/app/hooks/useLoginModel';
+import useLoginModel from '@/app/hooks/useLoginModal';
 import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";

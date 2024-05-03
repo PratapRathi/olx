@@ -11,6 +11,7 @@ import Button from "@/app/components/Button"
 import { useRouter } from "next/navigation"
 import { FaSearch } from "react-icons/fa";
 import { User } from "@prisma/client"
+import useSellModal from "@/app/hooks/useSellModal"
 
 
 interface NavbarProps {
@@ -18,14 +19,11 @@ interface NavbarProps {
 }
 
 const Navbar:React.FC<NavbarProps> = ({currentUser}) => {
+  const sellModal = useSellModal();
   const router = useRouter();
   const [city, setCity] = useState<cityType | undefined | null>(undefined);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const isLoggedIn = true;
-
-  const handle_Sell = () => { };
 
   const handleSearch = () => { };
 
@@ -44,7 +42,7 @@ const Navbar:React.FC<NavbarProps> = ({currentUser}) => {
             />
             <FaSearch onClick={handleSearch} className="absolute right-2 cursor-pointer" />
           </div>
-          <Button onClick={handle_Sell} label="Sell Now" className="rounded-xl hidden md:block bg-white py-2 px-3 shadow-lg" />
+          <Button onClick={sellModal.onOpen} label="Sell Now" className="hidden md:block" />
           <UserMenu currentUser={currentUser} />
         </nav>
         <Categories />

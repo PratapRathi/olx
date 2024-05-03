@@ -12,12 +12,13 @@ const CitySelect: React.FC<CitySelectProps> = ({ value, onChange }) => {
     return (
         <Select
             placeholder="Anywhere"
+            id='SearchCity'
             isClearable
             value={value}
             onChange={onChange}
             options={data}
             classNames={{
-                control: () => "p-1 border-1 md:w-40",
+                control: () => "p-1 border-1 w-full",
                 input: () => "text-md",
                 option: () => "text-md"
             }}

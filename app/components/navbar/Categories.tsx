@@ -5,7 +5,7 @@ import { FaCarSide, FaMotorcycle, FaMobile, FaLaptop } from "react-icons/fa";
 import { ImMobile2 } from "react-icons/im";
 import CategoryBox from "./CategoryBox";
 
-const categories = [
+export const categories = [
     {
         label: "Car",
         icon: FaCarSide
@@ -34,8 +34,8 @@ const Categories = () => {
 
     const pathName = usePathname();
     const isMainPage = pathName === "/";
-    // if (!isMainPage) return null;
-
+    
+    if (!isMainPage) return null;
     return (
         <Container>
             <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto">
