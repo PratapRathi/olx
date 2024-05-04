@@ -1,13 +1,14 @@
 "use client"
 
-import useSellModal from "@/app/hooks/useSellModal"
-import { IoMdClose } from "react-icons/io"
-import Button from "../Button";
-import { useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
 import { categories } from "@/app/components/navbar/Categories";
-import CategoryInput from "../input/CategoryInput";
-import CitySelect from "../input/CitySelect";
+import CategoryInput from "@/app/components/input/CategoryInput";
+import CitySelect from "@/app/components/input/CitySelect";
+import TextInput from "@/app/components/input/TextInput";
+import { FieldValues, useForm } from "react-hook-form";
+import useSellModal from "@/app/hooks/useSellModal"
+import Button from "@/app/components/Button";
+import { IoMdClose } from "react-icons/io"
+import { useState } from "react";
 
 enum STEPS {
     CATEGORY,
@@ -20,15 +21,27 @@ const SellModal = () => {
     const sellModal = useSellModal();
     const [step, setStep] = useState(STEPS.CATEGORY);
 
-    const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<FieldValues>({
+    const { register, handleSubmit, setValue, watch, reset, formState: { errors }, getFieldState } = useForm<FieldValues>({
         defaultValues: {
-            category: "",
+            category: "Car",
             location: null,
+            brand: "",
+            title: "",
+            description: "",
+            driven: "",
+            year: "",
+            price: 500
         },
     });
 
     const category = watch("category");
     const location = watch("location");
+    const brand = watch("brand");
+    const title = watch("title");
+    const description = watch("description");
+    const driven = watch("driven");
+    const year = watch("year");
+    const price = watch("price");
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -47,7 +60,6 @@ const SellModal = () => {
     }
 
     const onSubmit = () => {
-        console.log(location);
         if (step !== STEPS.IMAGE) return onNext();
     }
 
@@ -56,26 +68,41 @@ const SellModal = () => {
             <h3 className="font-semibold text-lg">Select the Category</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 overflow-y-auto">
                 {categories.map((item) => (
-                    <CategoryInput onClick={setCustomValue} key={item.label} label={item.label} icon={item.icon} selected={item.label === category}/>
+                    <CategoryInput onClick={setCustomValue} key={item.label} label={item.label} icon={item.icon} selected={item.label === category} />
                 ))}
             </div>
         </>
     )
 
-    if(step === STEPS.LOCATION) {
+    if (step === STEPS.LOCATION) {
         bodyContent = (
             <>
                 <h3 className="font-semibold text-lg">Choose your City</h3>
-                <CitySelect value={location} onChange={(value)=>{setCustomValue("location", value)}}/>
+                <CitySelect value={location} onChange={(value) => { setCustomValue("location", value) }} />
             </>
         )
     }
 
-    if(step === STEPS.DETAILS) {
+    if (step === STEPS.DETAILS) {
         bodyContent = (
             <>
-                <h3 className="font-semibold text-lg">Add Detials of your Item</h3>
-                
+                <h3 className="font-semibold text-lg">Add Details of your Item</h3>
+                <TextInput id="brand" label="Brand" register={register} errors={errors} getFieldState={getFieldState} />
+                <TextInput id="title" label="Title" register={register} errors={errors} />
+                <TextInput id="description" label="Description" register={register} errors={errors} />
+                {(category === "Car" || category === "Motorcycle") && (
+                    <TextInput id="driven" label="KM Driven" register={register} errors={errors} />
+                )}
+                <TextInput id="year" label="Year" register={register} errors={errors} />
+                <TextInput id="price" label="Price" register={register} errors={errors} type="number" />
+            </>
+        )
+    }
+
+    if(step === STEPS.IMAGE) {
+        bodyContent = (
+            <>
+                <h3 className="font-semibold text-lg">Add Image of you Item</h3>
             </>
         )
     }
@@ -97,7 +124,7 @@ const SellModal = () => {
                         {step !== STEPS.CATEGORY ? (
                             <Button onClick={onBack} className="w-full" label="Back" />
                         ) : null}
-                        <Button onClick={onSubmit} className="w-full" label={step === STEPS.LOCATION ? "Sell Now" : "Next"} />
+                        <Button onClick={onSubmit} className="w-full" label={step === STEPS.IMAGE ? "Sell Now" : "Next"} />
                     </div>
                 </div>
             </div>

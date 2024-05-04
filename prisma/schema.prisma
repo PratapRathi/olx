@@ -48,15 +48,15 @@ model Account {
 model Post {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt   DateTime @default(now())
+  category    String
+  location    String
+  brand       String
   title       String
   description String
-  imageSrc    String
-  category    String
-  price       Int
-  year        Int
   kmDriven    Int?
-  owners      String
-  location    String
+  year        Int
+  price       Int
+  imageSrc    String
   sold        Boolean  @default(false)
   userId      String   @db.ObjectId
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
