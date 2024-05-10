@@ -2,13 +2,15 @@
 
 import { categories } from "@/app/components/navbar/Categories";
 import CategoryInput from "@/app/components/input/CategoryInput";
+import ImageUpload from "@/app/components/input/ImageUpload";
 import CitySelect from "@/app/components/input/CitySelect";
 import TextInput from "@/app/components/input/TextInput";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useSellModal from "@/app/hooks/useSellModal"
 import Button from "@/app/components/Button";
 import { IoMdClose } from "react-icons/io"
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 enum STEPS {
     CATEGORY,
@@ -21,16 +23,17 @@ const SellModal = () => {
     const sellModal = useSellModal();
     const [step, setStep] = useState(STEPS.CATEGORY);
 
-    const { register, handleSubmit, setValue, watch, reset, formState: { errors }, getFieldState } = useForm<FieldValues>({
+    const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<FieldValues>({
         defaultValues: {
             category: "Car",
             location: null,
             brand: "",
             title: "",
             description: "",
-            driven: "",
-            year: "",
-            price: 500
+            driven: null,
+            year: null,
+            price: 500,
+            imageSrc: ""
         },
     });
 
@@ -42,6 +45,7 @@ const SellModal = () => {
     const driven = watch("driven");
     const year = watch("year");
     const price = watch("price");
+    const imageSrc = watch("imageSrc");
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -59,8 +63,12 @@ const SellModal = () => {
         setStep((value) => value + 1);
     }
 
-    const onSubmit = () => {
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
         if (step !== STEPS.IMAGE) return onNext();
+        if(!location) return toast.error("Location is required")
+        if(!imageSrc) return toast.error("Please upload image")
+        data.location = data.location.label;
+        console.log(data);
     }
 
     let bodyContent = (
@@ -87,22 +95,23 @@ const SellModal = () => {
         bodyContent = (
             <>
                 <h3 className="font-semibold text-lg">Add Details of your Item</h3>
-                <TextInput id="brand" label="Brand" register={register} errors={errors} getFieldState={getFieldState} />
+                <TextInput id="brand" label="Brand" register={register} errors={errors} />
                 <TextInput id="title" label="Title" register={register} errors={errors} />
                 <TextInput id="description" label="Description" register={register} errors={errors} />
                 {(category === "Car" || category === "Motorcycle") && (
-                    <TextInput id="driven" label="KM Driven" register={register} errors={errors} />
+                    <TextInput id="driven" label="KM Driven" register={register} errors={errors} type="number"/>
                 )}
-                <TextInput id="year" label="Year" register={register} errors={errors} />
+                <TextInput id="year" label="Year" register={register} errors={errors} type="number"/>
                 <TextInput id="price" label="Price" register={register} errors={errors} type="number" />
             </>
         )
     }
 
-    if(step === STEPS.IMAGE) {
+    if (step === STEPS.IMAGE) {
         bodyContent = (
             <>
                 <h3 className="font-semibold text-lg">Add Image of you Item</h3>
+                <ImageUpload value={imageSrc} onChange={(value) => setCustomValue("imageSrc", value)} />
             </>
         )
     }
@@ -124,7 +133,7 @@ const SellModal = () => {
                         {step !== STEPS.CATEGORY ? (
                             <Button onClick={onBack} className="w-full" label="Back" />
                         ) : null}
-                        <Button onClick={onSubmit} className="w-full" label={step === STEPS.IMAGE ? "Sell Now" : "Next"} />
+                        <Button onClick={handleSubmit(onSubmit)} className="w-full" label={step === STEPS.IMAGE ? "Sell Now" : "Next"} />
                     </div>
                 </div>
             </div>
