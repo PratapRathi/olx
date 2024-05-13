@@ -11,6 +11,7 @@ import Button from "@/app/components/Button";
 import { IoMdClose } from "react-icons/io"
 import { useState } from "react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 enum STEPS {
     CATEGORY,
@@ -22,6 +23,7 @@ enum STEPS {
 const SellModal = () => {
     const sellModal = useSellModal();
     const [step, setStep] = useState(STEPS.CATEGORY);
+    const [isLoading, setIsLoading] = useState(false);
 
     const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<FieldValues>({
         defaultValues: {
@@ -68,7 +70,20 @@ const SellModal = () => {
         if(!location) return toast.error("Location is required")
         if(!imageSrc) return toast.error("Please upload image")
         data.location = data.location.label;
-        console.log(data);
+
+        if(isLoading) return;
+        setIsLoading(true);
+        const toastId = toast.loading("Loading...");
+
+        axios.post("/api/listing", data).then(()=>{
+            toast.success("Post created successfully", {id: toastId});
+            sellModal.onClose();
+            reset();
+        }).catch(()=>{
+            toast.error("Something went wrong", {id: toastId});
+        }).finally(()=>{
+            setIsLoading(false);
+        })
     }
 
     let bodyContent = (
