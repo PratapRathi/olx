@@ -30,7 +30,7 @@ const SellModal = () => {
             brand: "",
             title: "",
             description: "",
-            driven: null,
+            kmDriven: null,
             year: null,
             price: 500,
             imageSrc: ""
@@ -42,7 +42,7 @@ const SellModal = () => {
     const brand = watch("brand");
     const title = watch("title");
     const description = watch("description");
-    const driven = watch("driven");
+    const kmDriven = watch("kmDriven");
     const year = watch("year");
     const price = watch("price");
     const imageSrc = watch("imageSrc");
@@ -99,10 +99,10 @@ const SellModal = () => {
                 <TextInput id="title" label="Title" register={register} errors={errors} />
                 <TextInput id="description" label="Description" register={register} errors={errors} />
                 {(category === "Car" || category === "Motorcycle") && (
-                    <TextInput id="driven" label="KM Driven" register={register} errors={errors} type="number"/>
+                    <TextInput id="kmDriven" label="KM Driven" register={register} errors={errors} type="number"/>
                 )}
                 <TextInput id="year" label="Year" register={register} errors={errors} type="number"/>
-                <TextInput id="price" label="Price" register={register} errors={errors} type="number" />
+                <TextInput id="price" label="Price" register={register} errors={errors} type="number" price />
             </>
         )
     }
@@ -110,7 +110,7 @@ const SellModal = () => {
     if (step === STEPS.IMAGE) {
         bodyContent = (
             <>
-                <h3 className="font-semibold text-lg">Add Image of you Item</h3>
+                <h3 className="font-semibold text-lg">Add Image of your Item</h3>
                 <ImageUpload value={imageSrc} onChange={(value) => setCustomValue("imageSrc", value)} />
             </>
         )
