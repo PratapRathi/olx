@@ -79,6 +79,7 @@ const SellModal = () => {
             toast.success("Post created successfully", {id: toastId});
             sellModal.onClose();
             reset();
+            setStep(STEPS.CATEGORY);
         }).catch(()=>{
             toast.error("Something went wrong", {id: toastId});
         }).finally(()=>{

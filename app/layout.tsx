@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/components/navbar/Navbar";
 import ToasterProvider from "@/app/providers/ToasterProvider";
@@ -7,7 +7,9 @@ import LoginModal from "@/app/components/modals/LoginModal";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import SellModal from "@/app/components/modals/SellModal";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Nunito({
+  subsets: ["latin"]
+})
 
 export const metadata: Metadata = {
   title: "OLX - Free Classified in India",
@@ -19,7 +21,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const currentUser = await getCurrentUser();
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={font.className}>
         <ToasterProvider />
         <LoginModal />
         <SellModal />
