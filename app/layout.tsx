@@ -20,11 +20,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToasterProvider/>
+        <ToasterProvider />
         <LoginModal />
-        <SellModal/>
+        <SellModal />
         <Navbar currentUser={currentUser} />
-        {children}
+        <div className="pb-20 pt-28">
+          {children}
+        </div>
       </body>
     </html>
   );
