@@ -2,6 +2,7 @@
 import { Post, User } from "@prisma/client"
 import Image from "next/image"
 import HeartButton from "../HeartButton"
+import { FaLocationDot } from "react-icons/fa6";
 
 
 interface ListingCardProps {
@@ -22,8 +23,12 @@ const ListingCard: React.FC<ListingCardProps> = ({ currentUser, data }) => {
                 <div className="font-semibold text-lg">
                     {data.title}, {data.brand}
                 </div>
-                <div className="font-light text-neutral-500">
-                    {data.category}
+                <div className="font-light text-neutral-500 flex items-center justify-between">
+                    <span>{data.category}</span>
+                    <div className="flex items-center justify-center gap-1">
+                        <FaLocationDot/>
+                        <span>{data.location}</span>
+                    </div>
                 </div>
                 <div className="font-semibold">₹ {data.price}</div>
             </div>
