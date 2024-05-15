@@ -67,7 +67,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ currentUser, data, selfItem }
                 {selfItem && (
                     <div className="flex items-center justify-center gap-2">
                         {!data.sold && <Button onClick={handleSell} label="Sold" className="w-full" />}
-                        <Button onClick={handleDelete} label="Delete" className="w-full bg-rose-500 text-white hover:bg-red-600" />
+                        <Button onClick={handleDelete} label="Delete" className="w-full !bg-rose-500 text-white hover:bg-red-600" />
                     </div>
                 )}
             </div>
