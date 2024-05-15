@@ -5,10 +5,11 @@ export interface IListingParams {
     category?: string
     location?: string
     search?: string
+    self?: boolean
 }
 
 export default async function getListings(params: IListingParams) {
-    const { userId, category, location, search } = params;
+    const { userId, category, location, search, self } = params;
 
     let query: any = {};
 
@@ -16,6 +17,7 @@ export default async function getListings(params: IListingParams) {
     if (category) query.category = category;
     if (location) query.location = location;
     if (search) query.title = { contains: search, mode: 'insensitive' }
+    if (!self) query.sold = false;
 
     const listings = await prisma.post.findMany({
         where: query,

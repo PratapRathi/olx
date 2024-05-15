@@ -11,7 +11,7 @@ interface HomeProps {
 
 const Home = async ({ searchParams }: HomeProps) => {
   const [listings, currentUser] = await Promise.all([getListings(searchParams), getCurrentUser()])
-
+  
   if (listings.length === 0) {
     return (
       <EmptyState showReset />

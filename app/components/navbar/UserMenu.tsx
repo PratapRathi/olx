@@ -8,6 +8,7 @@ import { User } from "@prisma/client";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import useSellModal from "@/app/hooks/useSellModal";
+import { useRouter } from "next/navigation";
 
 
 interface UserMenuProps {
@@ -16,6 +17,7 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     const sellModal = useSellModal();
+    const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     const handleOpen = useCallback(() => {
         setIsOpen(!isOpen);
@@ -52,8 +54,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                         ) : (
                             <>
                                 <MenuItem onClick={sellModal.onOpen} label="Sell Now" />
-                                <MenuItem label="Favorites" />
-                                <MenuItem label="My Post" />
+                                <MenuItem onClick={()=> router.push("/favorites")} label="Favorites" />
+                                <MenuItem onClick={()=> router.push("/selfPost")} label="My Post" />
                                 <MenuItem label="My Conversation" />
                                 <hr />
                                 <MenuItem onClick={logout} label="Logout" /></>
