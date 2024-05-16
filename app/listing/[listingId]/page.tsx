@@ -1,10 +1,24 @@
+import getListingById from '@/app/actions/getListingbyId'
+import EmptyState from '@/app/components/EmptyState';
 import React from 'react'
+import ListingClient from './ListingClient';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
-const page = () => {
+interface Iparams {
+  listingId?: string
+}
+
+const page = async ({ params }: { params: Iparams }) => {
+  const [currentUser, listing] = await Promise.all([getCurrentUser(), getListingById(params)])
+
+  if (!listing) {
+    return (
+      <EmptyState />
+    )
+  }
+
   return (
-    <div>
-      
-    </div>
+    <ListingClient data={listing} currentUser={currentUser}/>
   )
 }
 
