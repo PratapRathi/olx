@@ -14,7 +14,7 @@ const page = async () => {
   const listings = await getListings({ userId: currentUser?.id, self: true });
 
   if (listings.length === 0) {
-    <EmptyState title="No properties found" subtitle="Looks like you have no properties" />
+    <EmptyState title="No Post found" subtitle="Looks like you have not posted any Item" />
   }
 
   return (

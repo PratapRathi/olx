@@ -1,5 +1,4 @@
 "use client"
-import Container from "@/app/components/Container"
 import { usePathname, useSearchParams } from "next/navigation";
 import { FaCarSide, FaMotorcycle, FaMobile, FaLaptop } from "react-icons/fa";
 import { ImMobile2 } from "react-icons/im";
@@ -34,16 +33,16 @@ const Categories = () => {
 
     const pathName = usePathname();
     const isMainPage = pathName === "/";
-    
+
     if (!isMainPage) return null;
     return (
-        <Container>
+        <div className="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4">
             <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto bg-white">
-                {categories.map((item)=>(
-                    <CategoryBox key={item.label} icon={item.icon} label={item.label} selected={category===item.label}/>
+                {categories.map((item) => (
+                    <CategoryBox key={item.label} icon={item.icon} label={item.label} selected={category === item.label} />
                 ))}
             </div>
-        </Container>
+        </div>
     )
 }
 

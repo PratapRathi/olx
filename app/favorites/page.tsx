@@ -11,7 +11,9 @@ const page = async () => {
 
   if (favorite.length === 0) {
     return (
-      <EmptyState title="No favorite found" subtitle="Looks like you have no favorite property" />
+      <div className='pb-20 pt-28'>
+        <EmptyState title="No favorite found" subtitle="Looks like you have no favorite Item" />
+      </div>
     )
   }
   return (
