@@ -4,5 +4,6 @@ export const config = {
     matcher: [
         "/favorites",
         "/selfPost",
+        "/conversations",
     ]
 }
