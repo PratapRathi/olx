@@ -22,7 +22,7 @@ const page = async ({ params }: { params: Iparams }) => {
     <div className='flex-1 bg-gray-100 h-full'>
       <div className="flex flex-col h-full">
         <Header conversation={conversation} />
-        <Body initialMessages={messages} />
+        <Body conversationId={params.conversationId} initialMessages={messages} />
       </div>
     </div>
   )
