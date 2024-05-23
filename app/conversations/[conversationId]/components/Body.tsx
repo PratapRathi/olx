@@ -1,7 +1,8 @@
 "use client"
-import { FullMessageType } from "@/app/types"
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import { FullMessageType } from "@/app/types"
+import MessageBox from "./MessageBox";
+import axios from "axios";
 
 interface BodyProps {
   initialMessages: FullMessageType[]
@@ -20,7 +21,9 @@ const Body: React.FC<BodyProps> = ({ initialMessages, conversationId }) => {
 
   return (
     <div className="flex-1 overflow-y-auto">
-
+      {messages.map((message, idx) => (
+        <MessageBox data={message} key={message.id} isLast={idx === messages.length - 1} />
+      ))}
       <div ref={bottomRef} className="pt-24" />
     </div>
   )
