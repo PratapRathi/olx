@@ -6,6 +6,7 @@ import ToasterProvider from "@/app/providers/ToasterProvider";
 import LoginModal from "@/app/components/modals/LoginModal";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import SellModal from "@/app/components/modals/SellModal";
+import AuthContext from "@/app/context/AuthContext";
 
 const font = Nunito({
   subsets: ["latin"]
@@ -22,11 +23,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="en">
       <body className={font.className}>
-        <ToasterProvider />
-        <LoginModal />
-        <SellModal />
-        <Navbar currentUser={currentUser} />
-        {children}
+        <AuthContext>
+          <ToasterProvider />
+          <LoginModal />
+          <SellModal />
+          <Navbar currentUser={currentUser} />
+          {children}
+        </AuthContext>
       </body>
     </html>
   );
