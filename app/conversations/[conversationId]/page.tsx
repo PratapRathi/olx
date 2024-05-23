@@ -1,6 +1,7 @@
 import MessageEmptyState from '@/app/conversations/[conversationId]/components/MessageEmptyState';
 import Header from '@/app/conversations/[conversationId]/components/Header';
 import Body from '@/app/conversations/[conversationId]/components/Body';
+import Form from '@/app/conversations/[conversationId]/components/Form';
 import getConversationById from '@/app/actions/getConversationById'
 import getMessages from '@/app/actions/getMessages';
 
@@ -23,6 +24,7 @@ const page = async ({ params }: { params: Iparams }) => {
       <div className="flex flex-col h-full">
         <Header conversation={conversation} />
         <Body conversationId={params.conversationId} initialMessages={messages} />
+        <Form conversationId={params.conversationId}/>
       </div>
     </div>
   )
