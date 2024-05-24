@@ -1,6 +1,6 @@
 "use client"
 import logo from "../../../public/olx.svg"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { Suspense, useCallback, useMemo, useState } from "react"
 import Image from "next/image"
 import qs from "query-string";
 import SearchInput from "@/app/components/input/SearchInput"
@@ -80,12 +80,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
               disabled={isLoading}
               className="w-full p-2 rounded-lg outline outline-1 outline-gray-300"
             />
-            <FaSearch onClick={()=> handleSearch(city?.label)} className="absolute right-2 cursor-pointer" />
+            <FaSearch onClick={() => handleSearch(city?.label)} className="absolute right-2 cursor-pointer" />
           </div>
           <Button onClick={sellModal.onOpen} label="Sell Now" className="hidden md:block" />
           <UserMenu currentUser={currentUser} />
         </nav>
-        <Categories />
+        <Suspense>
+          <Categories />
+        </Suspense>
       </div>
     </>
   )

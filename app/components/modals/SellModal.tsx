@@ -1,5 +1,4 @@
 "use client"
-
 import { categories } from "@/app/components/navbar/Categories";
 import CategoryInput from "@/app/components/input/CategoryInput";
 import ImageUpload from "@/app/components/input/ImageUpload";
@@ -41,12 +40,6 @@ const SellModal = () => {
 
     const category = watch("category");
     const location = watch("location");
-    const brand = watch("brand");
-    const title = watch("title");
-    const description = watch("description");
-    const kmDriven = watch("kmDriven");
-    const year = watch("year");
-    const price = watch("price");
     const imageSrc = watch("imageSrc");
 
     const setCustomValue = (id: string, value: any) => {

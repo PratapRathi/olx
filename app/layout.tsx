@@ -7,6 +7,7 @@ import LoginModal from "@/app/components/modals/LoginModal";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import SellModal from "@/app/components/modals/SellModal";
 import AuthContext from "@/app/context/AuthContext";
+import { Suspense } from "react";
 
 const font = Nunito({
   subsets: ["latin"]
@@ -27,7 +28,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <ToasterProvider />
           <LoginModal />
           <SellModal />
-          <Navbar currentUser={currentUser} />
+          <Suspense>
+            <Navbar currentUser={currentUser} />
+          </Suspense>
           {children}
         </AuthContext>
       </body>

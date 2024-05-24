@@ -3,6 +3,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { FaCarSide, FaMotorcycle, FaMobile, FaLaptop } from "react-icons/fa";
 import { ImMobile2 } from "react-icons/im";
 import CategoryBox from "./CategoryBox";
+import { Suspense } from "react";
 
 export const categories = [
     {
@@ -39,7 +40,9 @@ const Categories = () => {
         <div className="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4">
             <div className="pt-4 flex flex-row items-center justify-between overflow-x-auto bg-white">
                 {categories.map((item) => (
-                    <CategoryBox key={item.label} icon={item.icon} label={item.label} selected={category === item.label} />
+                    <Suspense key={item.label}>
+                        <CategoryBox key={item.label} icon={item.icon} label={item.label} selected={category === item.label} />
+                    </Suspense>
                 ))}
             </div>
         </div>

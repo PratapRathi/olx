@@ -5,7 +5,6 @@ import getCurrentUser from "./getCurrentUser";
 const getConversation = async () => {
     const currentUser = await getCurrentUser();
     if (!currentUser) { 
-        console.log("1 is triggerd");
         return []
      }
 
@@ -23,12 +22,9 @@ const getConversation = async () => {
                 }
             }
         });
-
-        console.log("2 is triggerd");
         return conversations;
 
     } catch (error: any) {
-        console.log("3 is triggerd");
         return [];
     }
 }

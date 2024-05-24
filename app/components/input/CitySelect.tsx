@@ -1,6 +1,7 @@
 "use client"
 import { cityType, getCities } from '@/app/hooks/useAllCities';
-import Select from 'react-select'
+import { useEffect, useId, useState } from 'react';
+import ReactSelect from 'react-select'
 
 interface CitySelectProps {
     value: cityType | undefined | null
@@ -8,11 +9,16 @@ interface CitySelectProps {
 }
 
 const CitySelect: React.FC<CitySelectProps> = ({ value, onChange }) => {
+    const id = useId();
     const data = getCities("IN");
-    return (
-        <Select
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => setIsMounted(true), []);
+
+    return isMounted ? (
+        <ReactSelect
             placeholder="Anywhere"
-            id='SearchCity'
+            id={id}
             isClearable
             value={value}
             onChange={onChange}
@@ -32,7 +38,7 @@ const CitySelect: React.FC<CitySelectProps> = ({ value, onChange }) => {
                 }
             })}
         />
-    )
+    ) : null
 }
 
 export default CitySelect
