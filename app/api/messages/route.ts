@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import { pusherServer } from "@/app/libs/pusher";
 
 
 export async function POST(request: Request) {
@@ -31,22 +32,24 @@ export async function POST(request: Request) {
         })
 
         // TODO => Update Pusher for new Message
-
-        const updatedConversation = await prisma.conversation.update({
-            where: { id: conversationId },
-            data: {
-                lastMessageAt: new Date(),
-                messages: { connect: { id: newMessage.id } }
-            },
-            include: {
-                users: true,
-                messages: {
-                    include: { seen: true },
-                    orderBy: { createdAt: "desc" },
-                    take: 1
+        const [pusherResult, updatedConversation] = await Promise.all([
+            pusherServer.trigger(conversationId, "messages:new", newMessage),
+            prisma.conversation.update({
+                where: { id: conversationId },
+                data: {
+                    lastMessageAt: new Date(),
+                    messages: { connect: { id: newMessage.id } }
+                },
+                include: {
+                    users: true,
+                    messages: {
+                        include: { seen: true },
+                        orderBy: { createdAt: "desc" },
+                        take: 1
+                    }
                 }
-            }
-        })
+            })
+        ])
 
         const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
 
