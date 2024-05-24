@@ -4,7 +4,10 @@ import getCurrentUser from "./getCurrentUser";
 
 const getConversation = async () => {
     const currentUser = await getCurrentUser();
-    if (!currentUser) { return [] }
+    if (!currentUser) { 
+        console.log("1 is triggerd");
+        return []
+     }
 
     try {
         const conversations = await prisma.conversation.findMany({
@@ -21,9 +24,11 @@ const getConversation = async () => {
             }
         });
 
+        console.log("2 is triggerd");
         return conversations;
 
     } catch (error: any) {
+        console.log("3 is triggerd");
         return [];
     }
 }

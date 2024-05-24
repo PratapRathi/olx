@@ -32,6 +32,7 @@ const ListingClient: React.FC<ListingClientProps> = ({ data, currentUser }) => {
         }).then((res)=>{
             toast.success("Success", {id: toastId})
             router.push(`/conversations/${res.data.id}`)
+            router.refresh();
         }).catch((error)=>{
             toast.error("Something went wrong", {id: toastId})
         }).finally(()=>{

@@ -1,6 +1,7 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
+import { pusherServer } from "@/app/libs/pusher";
 
 
 export async function POST(request: Request) {
@@ -26,14 +27,14 @@ export async function POST(request: Request) {
         })
 
         const singleConversation = existingConversation[0];
-        if(singleConversation) return NextResponse.json(singleConversation);
+        if (singleConversation) return NextResponse.json(singleConversation);
 
         const newConversation = await prisma.conversation.create({
             data: {
                 users: {
                     connect: [
-                        {id: currentUser.id},
-                        {id: userId}
+                        { id: currentUser.id },
+                        { id: userId }
                     ]
                 }
             },
@@ -41,6 +42,12 @@ export async function POST(request: Request) {
                 users: true
             }
         });
+
+        newConversation.users.forEach((user) => {
+            if (user.email) {
+                pusherServer.trigger(user.email, "conversation-new", newConversation);
+            }
+        })
 
         return NextResponse.json(newConversation);
 

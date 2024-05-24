@@ -38,16 +38,16 @@ const Body: React.FC<BodyProps> = ({ initialMessages, conversationId }) => {
     const updateMessageHandler = (message: FullMessageType) => {
       setMessages((current) => current.map((currentMessage) => {
         if (currentMessage.id === message.id) return message;
-        return message;
+        return currentMessage;
       }))
     }
 
-    pusherClient.bind("messages:new", newMessageHandler);
+    pusherClient.bind("message:new", newMessageHandler);
     pusherClient.bind("message:update", updateMessageHandler);
 
     return () => {
       pusherClient.unsubscribe(conversationId);
-      pusherClient.unbind("messages:new", newMessageHandler);
+      pusherClient.unbind("message:new", newMessageHandler);
       pusherClient.unbind("message:update", updateMessageHandler);
     }
   }, [conversationId])

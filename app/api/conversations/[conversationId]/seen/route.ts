@@ -39,7 +39,10 @@ export async function POST(request: Request, { params }: { params: Iparams }) {
             data: { seen: { connect: { id: currentUser.id } } }
         })
 
-        // TODO => Pusher update Conversation
+        await pusherServer.trigger(currentUser.email, "conversation:update", {
+            id: conversationId,
+            messages: [updatedMessage]
+        })
 
         if (lastMessage.seenIds.indexOf(currentUser.id) !== -1) {
             return NextResponse.json(conversation);

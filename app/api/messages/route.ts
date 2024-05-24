@@ -31,9 +31,9 @@ export async function POST(request: Request) {
             }
         })
 
-        // TODO => Update Pusher for new Message
+
         const [pusherResult, updatedConversation] = await Promise.all([
-            pusherServer.trigger(conversationId, "messages:new", newMessage),
+            pusherServer.trigger(conversationId, "message:new", newMessage),
             prisma.conversation.update({
                 where: { id: conversationId },
                 data: {
@@ -53,7 +53,12 @@ export async function POST(request: Request) {
 
         const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
 
-        // TODO => Send this last message to all Conversation participants via Pusher
+        updatedConversation.users.map((user) => {
+            pusherServer.trigger(user.email!, "conversation:update", {
+                id: conversationId,
+                messages: [lastMessage]
+            })
+        })
 
         return NextResponse.json(newMessage);
 
