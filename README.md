@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Full Stack OLX Clone with Next.js 14 App Router: React, Tailwind, Prisma, MongoDB, Pusher, NextAuth 2024
 
-## Getting Started
+This is a repository for a Full Stack OLX Clone with Next.js 14 App Router: React, Tailwind, Prisma, MongoDB, Pusher, NextAuth.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Features:
+
+- Tailwind design
+- Tailwind animations and effects
+- Real-time messaging using Pusher
+- Full responsiveness
+- Credential authentication
+- Google authentication
+- Github authentication
+- Linkedin authentication
+- Image upload using Cloudinary CDN
+- Client form validation and handling using react-hook-form
+- Server error handling using react-toast
+- Page loading state
+- Page empty state
+- Creation and deletion of Items
+- Advanced search algorithm by category, location and keyword
+    - For example we will filter out Items based on our keyword search
+- Favorites system
+- Shareable URL filters
+    - Lets say you select a category and location, you will be able to share URL with a logged out friend in another browser and they will see the same results
+- How to write POST and DELETE routes in route handlers (app/api)
+- How to fetch data in server react components by directly accessing database (WITHOUT API! like Magic!)
+- How to handle files like error.tsx and loading.tsx which are new Next 14 templating files to unify loading and error handling
+- How to handle relations between Server and Child components!
+
+### Prerequisites
+
+**Node version 14.x**
+
+### Live Deployed at 
+
+```shell
+https://olx-pratap.vercel.app/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Cloning the repository
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```shell
+git clone https://github.com/PratapRathi/olx.git
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Install packages
 
-## Learn More
+```shell
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Setup .env file
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```js
+DATABASE_URL=
+NEXTAUTH_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GITHUB_ID=
+GITHUB_SECRET=
+LINKEDIN_CLIENT_ID=
+LINKEDIN_CLIENT_SECRET=
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+NEXT_PUBLIC_PUSHER_APP_KEY=
+PUSHER_APP_ID=
+PUSHER_SECRET=
+```
 
-## Deploy on Vercel
+### Setup Prisma
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```shell
+npx prisma db push
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+
+### Start the app
+
+```shell
+npm run dev
+```
+
+## Available commands
+
+Running commands with npm `npm run [command]`
+
+| command         | description                              |
+| :-------------- | :--------------------------------------- |
+| `dev`           | Starts a development instance of the app |
+| `build`         | Starts a production build of the app     |
